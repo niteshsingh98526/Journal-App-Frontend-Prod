@@ -1,0 +1,112 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f4f4f9, #e0e0f5); /* Gradient background */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #010101;
+  }
+
+  .login-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .login-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header {
+    background-color: #ffffff; /* Bootstrap primary blue */
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .card-header h4 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #010101;
+    box-shadow: 0 0 8px rgba(45, 46, 47, 0.3);
+  }
+
+  .invalid-feedback {
+    color: #dc3545; /* Bootstrap danger red */
+    font-size: 0.9em;
+    margin-top: 5px;
+  }
+
+  .btn-primary {
+    background-color: #cfa03a; /* Bootstrap primary blue */
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+  }
+
+  .btn-primary:hover {
+    background-color: #bd8409; /* Darker blue */
+    transform: scale(1.02);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .login-container {
+      padding: 15px;
+    }
+
+    .card-header h4 {
+      font-size: 1.5em;
+    }
+
+    .form-control {
+      font-size: 0.9em;
+    }
+
+    .btn-primary {
+      font-size: 1em;
+    }
+  }

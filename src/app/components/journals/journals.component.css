@@ -1,0 +1,67 @@
+/* #container-fluid {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em;
+    margin-left: -15em; 
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+} */
+
+.entrybtn{
+  
+   background-color: #ce9140;
+   color: white;
+}
+
+.entrybtn:hover{
+  background-color: #f0b05d;
+  color: white;
+}
+
+.head{
+  background-color: #ce9140;
+}
+
+.container {
+    padding: 20px;
+  }
+
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-title {
+    color: #0d6efd; /* Bootstrap primary blue */
+  }
+
+  .btn {
+    border-radius: 8px;
+  }
+
+  /* Custom Pagination Colors */
+.pagination .page-link {
+  color: #080808; /* custom purple */
+  border: 1px solid #0a0a0a;
+}
+
+.pagination .page-link:hover {
+  background-color: #ce9140;
+  color: white;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ce9140; /* coral for active */
+  border-color: #060606;
+  color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #cfc687;
+  border-color: #d7cc85;
+  background-color: #f8f9fa;
+}
+

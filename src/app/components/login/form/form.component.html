@@ -1,0 +1,58 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card p-4 shadow-lg" style="width: 400px;">
+        <h2 class="text-center mb-4">Login</h2>
+
+        <form [formGroup]="userForm" (ngSubmit)="yesLogin()">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" formControlName="userName" placeholder="Enter your username">
+                <div class="text-danger" *ngIf="submitted && getFormControl('userName')?.errors">
+                    Username is required
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" formControlName="password"
+                    placeholder="Enter your password">
+                <div class="text-danger" *ngIf="submitted && getFormControl('password')?.errors">
+                    Password is required (min 5 characters)
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit">Login</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <button class="btn btn-secondary me-2" (click)="openForgot()">Forgot password?</button>
+        </div>
+
+        <!-- <<<<<<< Current (Your changes) -->
+        <!-- Register & Admin Login Buttons -->
+        <div class="text-center mt-3">
+            <button class="btn btn-secondary me-2" (click)="navigateToRegister()">Register New Account</button>
+        </div>
+    </div>
+    <!-- ======= -->
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Forgot Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Email</label>
+                    <input type="text" class="form-control" [(ngModel)]="forgotInput" placeholder="Enter your email">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="submitForgot()">Send Reset Link</button>
+                </div>
+                <!-- >>>>>>> Incoming (Background Agent changes) -->
+            </div>
+        </div>
+    </div>
+
+</div>

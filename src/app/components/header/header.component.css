@@ -1,0 +1,27 @@
+.nav-link{
+    color: black;
+}
+
+/* Logo styles */
+.logo {
+    height: 40px; /* Adjust the height as needed */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Navbar brand styles (optional) */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link-btn{
+    text-align: center;
+    margin-top: 4%;
+    background: black;
+    color: white;
+    border-radius: 0.2;
+}
+
+.nav-link:hover {
+    color: white;
+}

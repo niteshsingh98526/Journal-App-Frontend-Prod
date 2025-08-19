@@ -1,0 +1,31 @@
+.container {
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  padding-bottom: 1%;
+  margin-bottom: 2%;
+}
+.table td, .table th { vertical-align: middle; }
+.badge button { padding: 0; border: 0; }
+
+/* Custom Pagination Colors */
+.pagination .page-link {
+  color: #080808; /* custom purple */
+  border: 1px solid #0a0a0a;
+}
+
+.pagination .page-link:hover {
+  background-color: #ce9140;
+  color: white;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ce9140; /* coral for active */
+  border-color: #060606;
+  color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #cfc687;
+  border-color: #d7cc85;
+  background-color: #f8f9fa;
+}

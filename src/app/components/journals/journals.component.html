@@ -1,0 +1,166 @@
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold text-center text-white">My Journals</h2>
+        <button class="entrybtn" (click)="openCreateModal()">+ New Entry</button>
+    </div>
+
+    <!-- Notification -->
+    <div *ngIf="notification" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ notification }}
+        <button type="button" class="btn-close" (click)="notification = null"></button>
+    </div>
+
+    <!-- Journals Table -->
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Date</th>
+                        <th>Sentiment</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let journal of paginatedJournals; let i = index">
+                        <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                        <td class="fw-semibold">{{ journal.title }}</td>
+                        <td>
+                            {{ journal.content | slice:0:50 }}{{ journal.content.length > 50 ? '...' : '' }}
+                        </td>
+                        <td>{{ journal.date | date:'mediumDate' }}</td>
+                        <td>
+                            <span class="badge" [ngClass]="{
+              'bg-success': journal.sentiment === 'HAPPY',
+              'bg-danger': journal.sentiment === 'SAD',
+              'bg-secondary': journal.sentiment === 'ANGERY',
+              'bg-primary': journal.sentiment === 'ANXIOUS'
+            }">
+                                {{ journal.sentiment }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-warning me-2" (click)="openEdit(journal)"
+                                title="Edit Entry">
+                                <i class="bi bi-pencil-fill"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(journal.id)"
+                                title="Delete Entry">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <!-- Empty state -->
+                    <tr *ngIf="journals.length === 0">
+                        <td colspan="6" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox"></i> No journals found
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ✅ Pagination controls -->
+        <div class="card-footer bg-light">
+            <nav *ngIf="totalPages > 1">
+                <ul class="pagination justify-content-center mb-0">
+                    <li class="page-item " [class.disabled]="currentPage === 1">
+                        <button class="page-link" (click)="goToPage(currentPage - 1)">Previous</button>
+                    </li>
+
+                    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let p = index"
+                        [class.active]="currentPage === p + 1">
+                        <button class="page-link" (click)="goToPage(p + 1)">{{ p + 1 }}</button>
+                    </li>
+
+                    <li class="page-item" [class.disabled]="currentPage === totalPages">
+                        <button class="page-link" (click)="goToPage(currentPage + 1)">Next</button>
+                    </li>
+                </ul>
+            </nav>
+            <div class="text-center mt-2 text-muted small">
+                Page {{ currentPage }} of {{ totalPages }}
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Journal Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="head modal-header text-dark">
+                    <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Edit Journal</h5>
+                    <button type="button" class="btn-close btn-close-white" (click)="closeModal('editModal')"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="editForm" class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Title</label>
+                            <input formControlName="title" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Content</label>
+                            <textarea formControlName="content" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Sentiment</label>
+                            <select formControlName="sentiment" class="form-select">
+                                <option value="HAPPY">😊 Happy</option>
+                                <option value="SAD">😢 Sad</option>
+                                <option value="ANGERY">😡 Angery</option>
+                                <option value="ANXIOUS">🥶 Anxious</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" (click)="closeModal('editModal')">Cancel</button>
+                    <button class="btn btn-success" (click)="updateEntry()">
+                        <i class="bi bi-check-circle-fill"></i> Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Entry Modal -->
+    <div class="modal fade" id="createEntryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">New Journal Entry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form [formGroup]="createForm" (ngSubmit)="onCreateSubmit()">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" formControlName="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control" rows="4" formControlName="content" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sentiment</label>
+                            <select formControlName="sentiment" class="form-select">
+                                <option value="HAPPY">😊 Happy</option>
+                                <option value="SAD">😢 Sad</option>
+                                <option value="ANGERY">😡 Angery</option>
+                                <option value="ANXIOUS">🥶 Anxious</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Add Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

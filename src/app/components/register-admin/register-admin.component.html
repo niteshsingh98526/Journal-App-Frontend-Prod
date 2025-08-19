@@ -1,0 +1,64 @@
+<div class="container mt-5 d-flex justify-content-center mb-5">
+    <div class="col-lg-6">
+        <div class="card login-card shadow mx-5">
+            <div class="card-header text-center text-dark">
+                <h4>Register Admin</h4>
+            </div>
+
+            <div class="card-body mx-5">
+                <form [formGroup]="registerAdminForm" (ngSubmit)="registerAdmin()">
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="form-label text-dark">Username</label>
+                        <input type="text" formControlName="userName" class="form-control"
+                            placeholder="Enter your username"
+                            [ngClass]="{'is-invalid': submitted && getFormControl('userName')?.errors}">
+                        <div *ngIf="submitted && getFormControl('userName')?.errors" class="invalid-feedback">
+                            <span *ngIf="getFormControl('userName')?.errors?.['required']">Username is required.</span>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label class="form-label text-dark">Email</label>
+                        <input type="email" formControlName="email" class="form-control" placeholder="Enter your email"
+                            [ngClass]="{'is-invalid': submitted && getFormControl('email')?.errors}">
+                        <div *ngIf="submitted && getFormControl('email')?.errors" class="invalid-feedback">
+                            <span *ngIf="getFormControl('email')?.errors?.['required']">Email is required.</span>
+                            <span *ngIf="getFormControl('email')?.errors?.['email']">Enter a valid email.</span>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label text-dark">Password</label>
+                        <input type="password" placeholder="Enter your password" formControlName="password"
+                            class="form-control"
+                            [ngClass]="{'is-invalid': submitted && getFormControl('password')?.errors}">
+                        <div *ngIf="submitted && getFormControl('password')?.errors" class="invalid-feedback">
+                            <span *ngIf="getFormControl('password')?.errors?.['required']">Password is required.</span>
+                            <span *ngIf="getFormControl('password')?.errors?.['minlength']">At least 6
+                                characters.</span>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mb-3">
+                        <label class="form-label text-dark">Confirm Password</label>
+                        <input type="password" formControlName="confirmPassword"
+                            placeholder="Enter your confirm password" class="form-control"
+                            [ngClass]="{'is-invalid': submitted && getFormControl('confirmPassword')?.errors}">
+                        <div *ngIf="submitted && getFormControl('confirmPassword')?.errors" class="invalid-feedback">
+                            <span *ngIf="getFormControl('confirmPassword')?.errors?.['required']">Confirm Password is
+                                required.</span>
+                            <span *ngIf="registerAdminForm.hasError('passwordMismatch')">Passwords do not match.</span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100">Register Admin</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

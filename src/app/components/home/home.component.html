@@ -1,0 +1,112 @@
+<!-- Notification -->
+<div *ngIf="notification" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ notification }}
+    <button type="button" class="btn-close" (click)="notification = null"></button>
+</div>
+
+<div class="container">
+
+    <!-- App Header -->
+    <h1>{{greeting}}</h1>
+    <p class="welcome-message">Welcome back! Ready to write your something new thoughts?</p>
+
+    <!-- Button to Open Modal -->
+    <button class="btn btn-primary new-entry-button" (click)="openModal()">+ New Entry</button>
+
+    <!-- Create Entry Modal -->
+    <div class="modal fade" id="createEntryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">New Journal Entry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form [formGroup]="createForm" (ngSubmit)="onCreateSubmit()">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" formControlName="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control" rows="4" formControlName="content" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sentiment</label>
+                            <select formControlName="sentiment" class="form-select">
+                                <option value="HAPPY">😊 Happy</option>
+                                <option value="SAD">😢 Sad</option>
+                                <option value="ANGERY">😡 Angery</option>
+                                <option value="ANXIOUS">🥶 Anxious</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Add Entry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Entries Section -->
+    <div class="recent-entries container my-4">
+        <h2 class="mb-3">Recent Entries</h2>
+
+        <div class="row">
+            <div class="col-md-4 mb-3" *ngFor="let entry of getRecentEntries()">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ entry.title }}</h5>
+                        <p class="card-text">{{ entry.content | slice:0:100 }}{{ entry.content.length > 100 ? '...' : ''
+                            }}</p>
+                        <p class="text-muted small mb-1"><i class="bi bi-calendar-event"></i> {{ entry.date | date:
+                            'mediumDate' }}</p>
+                        <span class="badge" [ngClass]="{
+                  'bg-success': entry.sentiment === 'HAPPY',
+                  'bg-danger': entry.sentiment === 'SAD',
+                  'bg-warning text-dark': entry.sentiment === 'ANXIOUS',
+                  'bg-secondary': entry.sentiment === 'ANGERY'
+                }">
+                            {{ entry.sentiment }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Add New features -->
+<div class="stats-section container my-4">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="header card-header text-white">
+            <h5 class="mb-0">Your Journal Stats</h5>
+        </div>
+        <div class="card-body">
+            <div class="row text-center">
+
+                <!-- Total Entries -->
+                <div class="col-md-4 stat-item">
+                    <div class="stat-number fs-2 fw-bold text-primary">{{ totalEntries }}</div>
+                    <div class="stat-label text-muted">Total Entries</div>
+                </div>
+
+                <!-- This Month -->
+                <div class="col-md-4 stat-item">
+                    <div class="stat-number fs-2 fw-bold text-success">{{ thisMonthEntries }}</div>
+                    <div class="stat-label text-muted">This Month</div>
+                </div>
+
+                <!-- Last Entry -->
+                <div class="col-md-4 stat-item">
+                    <div class="stat-number fs-5 fw-semibold text-dark">{{ lastEntryDate }}</div>
+                    <div class="stat-label text-muted">Last Entry</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

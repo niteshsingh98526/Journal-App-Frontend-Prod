@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ce9140;">
+    <div class="container-fluid">
+        <!-- Brand with Logo -->
+        <a class="navbar-brand" href="/">
+            <!-- Adjust height as needed -->
+            Journal App
+        </a>
+
+        <!-- Toggle Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto me-5 mb-2 mb-lg-0">
+                <li class="nav-item mx-2">
+                    <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" routerLink="/about">About</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" routerLink="/contact">Contact</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" routerLink="/journal">Journals</a> <!-- Link to Dashboard -->
+                </li>
+                <li class="nav-item mx-2" *ngIf="isAdmin()">
+                    <a class="nav-link" routerLink="/admin">Admin</a>
+                </li>
+                <li class="nav-item mx-1" *ngIf="isPasswordResetPage">
+                    <button class="nav-link-btn btn btn-link" *ngIf="!isLoggedIn()" routerLink="/login">Login</button>
+                    <button class="nav-link-btn btn-link" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,37 +1,43 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ce9140;">
     <div class="container-fluid">
         <!-- Brand with Logo -->
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" routerLink="/" (click)="closeNavbar()">
             <!-- Adjust height as needed -->
             Journal App
         </a>
 
-        <!-- Toggle Button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Toggle Button (Angular-controlled) -->
+        <button class="navbar-toggler" type="button" (click)="toggleNavbar()" aria-controls="navbarSupportedContent"
+            [attr.aria-expanded]="isMenuOpen" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- Navbar Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" [class.show]="isMenuOpen">
             <ul class="navbar-nav ms-auto me-5 mb-2 mb-lg-0">
                 <li class="nav-item mx-2">
-                    <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+                    <a class="nav-link" routerLink="/" (click)="closeNavbar()" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Home</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link" routerLink="/about">About</a>
+                    <a class="nav-link" routerLink="/about" (click)="closeNavbar()" routerLinkActive="active"
+                        ariaCurrentWhenActive="page">About</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link" routerLink="/contact">Contact</a>
+                    <a class="nav-link" routerLink="/contact" (click)="closeNavbar()" routerLinkActive="active"
+                        ariaCurrentWhenActive="page">Contact</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link" routerLink="/journal">Journals</a> <!-- Link to Dashboard -->
+                    <a class="nav-link" routerLink="/journal" (click)="closeNavbar()" routerLinkActive="active"
+                        ariaCurrentWhenActive="page">Journals</a> <!-- Link to Dashboard -->
                 </li>
                 <li class="nav-item mx-2" *ngIf="isAdmin()">
-                    <a class="nav-link" routerLink="/admin">Admin</a>
+                    <a class="nav-link" routerLink="/admin" (click)="closeNavbar()" routerLinkActive="active"
+                        ariaCurrentWhenActive="page">Admin</a>
                 </li>
                 <li class="nav-item mx-1" *ngIf="isPasswordResetPage">
-                    <button class="nav-link-btn btn btn-link" *ngIf="!isLoggedIn()" routerLink="/login">Login</button>
+                    <button class="nav-link-btn btn btn-link" *ngIf="!isLoggedIn()" routerLink="/login"
+                        (click)="closeNavbar()">Login</button>
                     <button class="nav-link-btn btn-link" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
                 </li>
             </ul>

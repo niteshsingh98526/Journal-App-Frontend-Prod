@@ -4,7 +4,7 @@ body {
     height: 100%; /* Full height */
     margin: 0; /* Remove default margin */
     color: black;
-    background-image: url('/public/bg.jpg'); /* Replace with your image URL */
+    background-image: url('/bg.jpg'); /* Served from public via angular.json assets */
     /* For a solid color */
     background-color: #f0f0f0;  
     /* For a gradient */
@@ -13,8 +13,12 @@ body {
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center;
     background-repeat: no-repeat; /* Prevents the image from repeating */
-    height: 100; /* Make sure it covers the full height */
-  }
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll/overlap on small screens */
+}
   
   .d-flex {
     display: flex; /* Enable flexbox */

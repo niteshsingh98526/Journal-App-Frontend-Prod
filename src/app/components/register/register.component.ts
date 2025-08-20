@@ -16,6 +16,7 @@ export class RegisterComponent {
 
   registerForm: FormGroup;
   submitted = false;
+  isLoading = false;
 
   constructor(private fb: FormBuilder, private authService: IntegrationService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -41,15 +42,18 @@ export class RegisterComponent {
   registerUser() {
     this.submitted = true;
     if (this.registerForm.valid) {
+      this.isLoading = true;
       this.authService.createUser(this.registerForm.value).subscribe(
         (response) => {
           console.log('Registration Successful', response);
           alert('Registration successful! Please login.');
           this.router.navigate(['/login']);
+          this.isLoading = false;
         },
         (error) => {
           console.error('Registration Failed', error);
           alert('Registration failed. Try again.');
+          this.isLoading = false;
         }
       );
     }

@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { JournalEntry } from '../../model/journal-entry';
 import { IntegrationService } from '../../services/integration.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 // Import Bootstrap Modal
 declare var bootstrap: any;
@@ -37,7 +38,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('journalModal', { static: false }) modalElement!: ElementRef;
   private modalInstance: any;
 
-  constructor(private fb: FormBuilder, private journalService: IntegrationService) {
+  constructor(private fb: FormBuilder, private journalService: IntegrationService, private authService: AuthService, private router: Router) {
     this.createForm = this.fb.group({
           title: ['', Validators.required],
           content: ['', Validators.required],
@@ -139,11 +140,17 @@ export class HomeComponent implements OnInit {
   }
   
   openModal(): void {
+     // Redirect unauthenticated users to login
+     if (!this.authService.getToken() || this.authService.isTokenExpired()) {
+       this.router.navigate(['/login']);
+       return;
+     }
+
      const modalElement = document.getElementById('createEntryModal');
-        if (modalElement) {
-          this.createModal = new bootstrap.Modal(modalElement);
-          this.createModal.show();
-        }
+     if (modalElement) {
+       this.createModal = new bootstrap.Modal(modalElement);
+       this.createModal.show();
+     }
   }
 
   closeModal(id: string): void {

@@ -4,6 +4,7 @@ import { IntegrationService } from '../../../services/integration.service';
 import { LoginRequest } from '../../../model/login-request';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { finalize } from 'rxjs/operators';
 
 declare const bootstrap: any;
 
@@ -28,6 +29,7 @@ export class FormComponent {
   request: LoginRequest = new LoginRequest();
   submitted = false;
   forgotInput = '';
+  isLoading = false;
 
   getFormControl(controlName: string) {
     return this.userForm.get(controlName);
@@ -43,7 +45,12 @@ export class FormComponent {
   this.request.userName = this.userForm.value.userName;
   this.request.password = this.userForm.value.password;
 
-  this.integration.doLogin(this.request).subscribe(
+  this.isLoading = true;
+  this.integration.doLogin(this.request).pipe(
+    finalize(() => {
+      this.isLoading = false;
+    })
+  ).subscribe(
     (res) => {
       console.log(res);
       if (res.token != null) {

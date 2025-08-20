@@ -12,9 +12,22 @@ import { Router, RouterModule } from '@angular/router';
 export class HeaderComponent {
 
 	route: string = ''; 
+  isMenuOpen = false;
 
   constructor(private router: Router) {
     this.route = this.router.url;
+    this.router.events.subscribe(() => {
+      this.route = this.router.url; // keep route in sync so isPasswordResetPage stays accurate
+      this.isMenuOpen = false; // close on navigation
+    });
+  }
+
+  closeNavbar(): void {
+    this.isMenuOpen = false;
+  }
+
+  toggleNavbar(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   isPasswordResetPage(): boolean {

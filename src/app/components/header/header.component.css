@@ -2,6 +2,11 @@
     color: black;
 }
 
+.nav-link.active {
+    color: white !important;
+    font-weight: 600;
+}
+
 /* Logo styles */
 .logo {
     height: 40px; /* Adjust the height as needed */
@@ -16,12 +21,29 @@
 
 .nav-link-btn{
     text-align: center;
-    margin-top: 4%;
+    margin-top: 0; /* Avoid pushing button down on small screens */
     background: black;
     color: white;
-    border-radius: 0.2;
+    border-radius: 4px;
 }
 
 .nav-link:hover {
     color: white;
+}
+
+/* Ensure navbar collapses cleanly and prevents overlap */
+@media (max-width: 992px) {
+  .navbar-nav {
+    padding: 12px 0;
+  }
+  .navbar-nav .nav-item {
+    margin: 6px 0;
+  }
+  .navbar-brand {
+    padding-left: 8px;
+  }
+  /* Ensure the toggler stays above collapse */
+  .navbar-toggler {
+    z-index: 1051;
+  }
 }

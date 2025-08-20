@@ -1,5 +1,5 @@
-<div class="container d-flex align-items-center justify-content-center min-vh-100">
-    <div class="card p-4 shadow-lg" style="width: 400px;">
+<div class="login-container">
+    <div class="login-card p-3 shadow-lg">
         <h2 class="text-center mb-4">Login</h2>
 
         <form [formGroup]="userForm" (ngSubmit)="yesLogin()">
@@ -20,7 +20,13 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary w-100" type="submit">Login</button>
+            <button class="btn btn-primary w-100" type="submit" [disabled]="isLoading">
+                <span *ngIf="!isLoading">Login</span>
+                <span *ngIf="isLoading" class="d-inline-flex align-items-center justify-content-center">
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    Logging in...
+                </span>
+            </button>
         </form>
 
         <div class="text-center mt-3">

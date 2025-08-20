@@ -111,3 +111,16 @@ body {
       font-size: 0.95em;
     }
   }
+
+  /* Extra small devices */
+  @media (max-width: 576px) {
+    .about-header h1 {
+      font-size: 1.6em;
+    }
+    .about-content h2 {
+      font-size: 1.25em;
+    }
+    .about-card {
+      padding: 20px;
+    }
+  }

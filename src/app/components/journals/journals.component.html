@@ -1,7 +1,7 @@
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <h2 class="fw-bold text-center text-white">My Journals</h2>
-        <button class="entrybtn" (click)="openCreateModal()">+ New Entry</button>
+        <button class="entrybtn btn" (click)="openCreateModal()">+ New Entry</button>
     </div>
 
     <!-- Notification -->
@@ -13,55 +13,57 @@
     <!-- Journals Table -->
     <div class="card shadow-lg border-0">
         <div class="card-body p-0">
-            <table class="table table-hover table-striped mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Date</th>
-                        <th>Sentiment</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let journal of paginatedJournals; let i = index">
-                        <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-                        <td class="fw-semibold">{{ journal.title }}</td>
-                        <td>
-                            {{ journal.content | slice:0:50 }}{{ journal.content.length > 50 ? '...' : '' }}
-                        </td>
-                        <td>{{ journal.date | date:'mediumDate' }}</td>
-                        <td>
-                            <span class="badge" [ngClass]="{
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0 align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" class="d-none d-sm-table-cell">#</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Date</th>
+                            <th>Sentiment</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let journal of paginatedJournals; let i = index">
+                            <td class="d-none d-sm-table-cell">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                            <td class="fw-semibold">{{ journal.title }}</td>
+                            <td class="wrap-content">
+                                {{ journal.content | slice:0:50 }}{{ journal.content.length > 50 ? '...' : '' }}
+                            </td>
+                            <td>{{ journal.date | date:'mediumDate' }}</td>
+                            <td>
+                                <span class="badge" [ngClass]="{
               'bg-success': journal.sentiment === 'HAPPY',
               'bg-danger': journal.sentiment === 'SAD',
               'bg-secondary': journal.sentiment === 'ANGERY',
               'bg-primary': journal.sentiment === 'ANXIOUS'
             }">
-                                {{ journal.sentiment }}
-                            </span>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-sm btn-outline-warning me-2" (click)="openEdit(journal)"
-                                title="Edit Entry">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(journal.id)"
-                                title="Delete Entry">
-                                <i class="bi bi-trash-fill"></i>
-                            </button>
-                        </td>
-                    </tr>
+                                    {{ journal.sentiment }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-warning me-2" (click)="openEdit(journal)"
+                                    title="Edit Entry">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(journal.id)"
+                                    title="Delete Entry">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
 
-                    <!-- Empty state -->
-                    <tr *ngIf="journals.length === 0">
-                        <td colspan="6" class="text-center text-muted py-4">
-                            <i class="bi bi-inbox"></i> No journals found
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        <!-- Empty state -->
+                        <tr *ngIf="journals.length === 0">
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox"></i> No journals found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- ✅ Pagination controls -->

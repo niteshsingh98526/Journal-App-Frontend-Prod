@@ -16,6 +16,7 @@ export class AuthService {
 
   setToken(token: string) {
     localStorage.setItem(this.tokenKey, token);
+    this.autoLogoutOnTokenExpiration(); // Schedule auto logout immediately
   }
 
   removeToken() {
@@ -27,8 +28,12 @@ export class AuthService {
     const token = this.getToken();
     if (!token) return null;
 
-    const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
-    return payload.exp ? payload.exp * 1000 : null; // Convert to milliseconds
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+      return payload.exp ? payload.exp * 1000 : null; // Convert to ms
+    } catch {
+      return null;
+    }
   }
 
   isTokenExpired(): boolean {
@@ -38,7 +43,10 @@ export class AuthService {
 
   autoLogoutOnTokenExpiration() {
     const expiration = this.getTokenExpiration();
-    if (!expiration) return;
+    if (!expiration){
+      this.removeToken();
+      return;
+    }
 
     const timeout = expiration - Date.now();
     if (timeout > 0) {

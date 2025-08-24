@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
-  const token = localStorage.getItem('jwt');
+  const token = authService.getToken();
 
   if (token && !authService.isTokenExpired()) {
     return true; // ✅ User is authenticated, allow access

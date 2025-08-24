@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private tokenKey = 'jwt';
+  
+  private tokenKey = 'token';
 
   constructor(private router: Router) {}
 
@@ -21,6 +22,8 @@ export class AuthService {
 
   removeToken() {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('roles');
+		localStorage.removeItem('currentUser');
     this.router.navigate(['/login']); // Redirect to login on logout
   }
 

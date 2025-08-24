@@ -5,6 +5,7 @@ import { LoginRequest } from '../../../model/login-request';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from '../../../services/auth.service';
 
 declare const bootstrap: any;
 
@@ -17,7 +18,7 @@ declare const bootstrap: any;
 })
 export class FormComponent {
 
-  constructor(private integration: IntegrationService) {}
+  constructor(private integration: IntegrationService, private authService: AuthService) {}
 
   // ✅ FormGroup with Validation
   userForm: FormGroup = new FormGroup({
@@ -54,9 +55,9 @@ export class FormComponent {
     (res) => {
       console.log(res);
       if (res.token != null) {
-        alert("✅ User login successful!" + res.token);
         const jwtToken=res.token;
-        localStorage.setItem('jwt', jwtToken);
+        this.authService.setToken(jwtToken);
+        alert("✅ User login successful!" + jwtToken);
         // Fetch current user and store roles/info
         this.integration.getCurrentUser().subscribe(user => {
           if (user) {
@@ -74,7 +75,7 @@ export class FormComponent {
       }
     },
     (error) => {
-      alert("❌ No user credentials are inputed!");
+      alert("❌ Session Expired!");
     }
   );
 }

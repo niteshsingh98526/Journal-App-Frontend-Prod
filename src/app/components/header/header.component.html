@@ -36,9 +36,9 @@
                         ariaCurrentWhenActive="page">Admin</a>
                 </li>
                 <li class="nav-item mx-1" *ngIf="isPasswordResetPage">
-                    <button class="nav-link-btn btn btn-link" *ngIf="!isLoggedIn()" routerLink="/login"
+                    <button class="btn btn btn-outlink-dark" *ngIf="!isLoggedIn()" routerLink="/login"
                         (click)="closeNavbar()">Login</button>
-                    <button class="nav-link-btn btn-link" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+                    <button class="btn btn-outline-danger" *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
                 </li>
             </ul>
         </div>
